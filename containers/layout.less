@@ -1,0 +1,174 @@
+@import "../components/home/home.less";
+.container-home-page {
+    //margin: 0 200px 100px 200px;
+    //box-shadow: 0 8px 6px -2px #ccc;
+    
+    .container {
+        max-width: 100% !important;
+        box-shadow: 0 0px 40px -2px #135B9E;
+        padding: 0 50px;
+    
+        .order-12 {
+            padding: 20px;
+        }
+
+        .order-1 {
+            padding: 10px 0;
+            .logo {
+                width: 350px;
+            }
+        }
+    
+        .btn-danger {
+            width: 75px;
+            height: 34px;
+            border: 1px solid #CCC;
+            background: none;
+            color: #DE010A;
+        }
+    }
+    .container-user-profile {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        .conatiner-welcome {
+            right: 30px;
+            position: absolute;
+            bottom: 30px;
+            h4 {
+                display: inline-block;
+            }
+            .logout-span {
+                display: block;
+            }
+        }
+    }
+    .container-top-header {
+        height: 35px;
+        width: 100%;
+        //box-shadow: 0 8px 6px -2px #ccc;
+        padding: 0 0 0 375px;
+        .image-school-name {
+            width: 60px;
+        }
+        .container-logo {
+            width: 291px;
+            position: absolute;
+            top: 105px;
+            float: left;
+            box-shadow: 4px 2px 25px 10px #CCC;
+            .image-logo {
+                height: 232px;
+            }
+
+            .school-name {
+                font-size: 20px;
+                font-weight: bold;
+                padding: 0px 10px;
+                font-family: cursive;
+                color: #F8DD97;
+                background: #1E154E;
+            }
+        }
+        .container-main {
+            display: inline-block;
+            float: left;
+            padding-left: 58px;
+            top: 30px;
+            position: absolute;
+            .menu-item {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #1E154E;
+                font-family: Century Gothic;
+                &:hover {
+                    color: #F6E1AA;
+                    cursor: pointer;
+                    background: #1E154E;
+                    box-shadow: 4px 2px 25px 10px #FFF; 
+                }
+            }
+        }
+    }
+
+    .container-middle-page {       
+        height: 750px;
+        margin-top: 25px;
+        @media (min-width: 900px) {
+            .container {
+                z-index: 0;
+                float: right;
+            }
+        }
+        .container-menu {
+            width: 200px;
+            height: 100%;
+            float: left;
+            .menu {
+                height: 40px;
+                background: #333;
+                box-shadow: 0 0px 40px -2px #135B9E;
+                color: #FFF;
+                margin: 0 0 5px 0;
+                font-size: 14px;
+                font-family: century gothic;
+                cursor: pointer;
+                text-align: right;
+                padding-right: 10px;
+                line-height: 38px;
+            }
+            .home-simple {
+                margin-left: 100px;
+                width: 100px;
+            }
+            .categories {
+                margin-left: 70px;
+                width: 130px;
+            }
+            .books-list {
+                margin-left: 115px;
+                width: 85px;
+            }
+            .authors-list {
+                margin-left: 101px;
+                width: 100px;  
+            }
+            // Selected Book Categories Class
+            .book-categories {
+                background: #E0482A;
+                width: 140px;
+                position: sticky;
+                box-shadow: 12px 5px 10px -1px #555;
+            }
+            .home {
+                background: #E0482A;
+                width: 110px;
+                position: sticky;
+                box-shadow: 12px 5px 10px -1px #555;
+            }
+            .books {
+                background: #E0482A;
+                width: 95px;
+                position: sticky;
+                box-shadow: 12px 5px 10px -1px #555;
+            }
+
+            .authors {
+                background: #E0482A;
+                width: 110px;
+                position: sticky;
+                box-shadow: 12px 5px 10px -1px #555; 
+            }
+
+        }
+        .container-page {
+            display: inline-block;
+            width: 89%;
+            border: 1px solid #CCC;
+            border-bottom: none;
+            height: 100%;
+        }
+    }
+}
