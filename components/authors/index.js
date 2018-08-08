@@ -44,7 +44,7 @@ export default class Books extends React.Component {
 
     }
     
-    onClickNewCategory = () => {
+    onClickNewAuthor = () => {
         this.setState({redirect: true})
     }
 
@@ -52,10 +52,10 @@ export default class Books extends React.Component {
 	render () {
 		return (
             <Layout selectedTab="authors">
-                <div className="container-book-categories">
+                <div className="page-container-layout">
                 <div className='page-header'>
 					
-					<h1>Books</h1>
+					<h1>Authors</h1>
 				</div>
 
                     <div className="container-table">
@@ -75,11 +75,11 @@ export default class Books extends React.Component {
                             
                     </div>
                 </div>
-                {this.state.redirect && <Redirect to="/create" />}
+                {this.state.redirect && <Redirect to="/new-author" />}
 
                 <div className='buttons-container'>
 						<div className='pull-right'>
-                        <button className="btn btn-primary pull-right" onClick={this.onClickNewCategory}>Add New Book</button>
+                        <button className="btn btn-primary pull-right" onClick={this.onClickNewAuthor}>Add New Author</button>
 							
 						</div>
 					</div>

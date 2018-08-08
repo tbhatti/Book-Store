@@ -10,9 +10,16 @@ import BookCategories from './components/book-categories';
 import CreateCategory from './components/book-categories/new';
 
 import BooksList from './components/books';
-import newBook from './components/books/new';
+import NewBook from './components/books/new';
+import BookDetail from './components/books/view';
+
+import PublishersList from './components/publishers/index';
 
 import AuthorsList from './components/authors';
+import NewAuthor from './components/authors/new';
+
+import ShoppingCart from './components/shopping-cart';
+
 
 export default () => {
 	return (
@@ -27,9 +34,16 @@ export default () => {
 				<Route path='/create' component={CreateCategory} />
 
 				<Route path='/books' component={BooksList} />
-				<Route path='/new-book' component={newBook} />
+				<Route path='/new-book' component={NewBook} />
+				<Route path='/book-detail/:id' component={BookDetail} />
+
+				<Route path='/publishers' component={PublishersList} />
 
 				<Route path='/authors' component={AuthorsList} />
+				<Route path='/new-author' component={NewAuthor} />
+
+				<Route path='/cart' component={ShoppingCart} />
+
 }}/>
 			</Switch>
 		</BrowserRouter>

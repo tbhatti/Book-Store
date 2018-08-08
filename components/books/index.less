@@ -7,9 +7,7 @@
 .page-header {
     background-color: #279AC4; 
     box-sizing: border-box;
-    height: 98px;
-    margin: 0;
-    padding: 24px 30px;
+    margin: 0 0 60px
 }
 
 
@@ -26,31 +24,6 @@ h1 {
     margin: 0 10px;
 }
 /*Locals*/
-
-.container-book-categories {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    font-size: 13px;
-    font-family: "Century Gothic";
-    text-align: center;
-    .container-table {
-        padding: 10px 50px;
-        height: 600px;
-        overflow-y: auto;
-        .form-group {
-            padding: 0 25px 0 0;
-        }
-    }    
-    .buttons-container {
-        margin-top: auto;
-        padding: 15px;
-    }
-
-
-  
-
-}
   .container-new-category {
     font-size: 13px;
     font-family: "Century Gothic";
@@ -86,8 +59,190 @@ h1 {
 }
 
 .small-image {
-    width: 70px;
+    width: 40px;
+    cursor: pointer;
 }
 .btn-success {
     margin: 10px !important;
 }
+
+
+
+.filter-col{
+    padding-left:10px;
+    padding-right:10px;
+    
+    
+}
+select.form-control {
+    height: 34px !important;
+    width: 200px !important;
+    margin: 0 5px;
+}
+
+.search-button {
+    height: 20px;
+}
+
+.auto-suggest {
+    position: absolute;
+    width: 195px;
+    padding-left: 0;
+    li {
+        display: flex;
+        padding: 7px 0px 0 5px;
+        border: 1px solid #CCC;
+        background: #FFF;
+        cursor: pointer;
+    }
+}
+.cotainer-details {
+    width: 100%;
+    .container-left-image {
+        width: 30%;
+        float: left;
+        .container-book-title {
+            height: 75px;
+            border: 1px solid;
+            border-radius: 15px;
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+            text-align: center;
+            align-content: center;
+            width: 510px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .container-book-image {
+            border: 1px solid;
+            border-radius: 15px;
+            margin-top: 10px;
+            padding-left: 10px;
+            img {
+                height: 272px;
+            }
+            .perimeter {
+                max-width: 1024px;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+              }
+              
+              .image {
+                flex: 0 0 100%;
+              }
+              
+              .copy {
+                padding: 20px;
+                font-family: sans-serif;
+              }
+              
+              @media (min-width: 415px) {
+                .perimeter {
+                  flex-direction: row;
+                }
+                
+                .image {
+                  flex: 0 0 50%;
+                }
+              }
+              
+              @media (min-width: 800px) {
+                .image {
+                  flex: 0 0 33.5%;
+                }
+              }
+              
+              
+        }
+    }
+    .container-right-details {
+        width: 69%;
+        border: 1px solid;
+        float: left;
+        border-radius: 15px;
+        padding: 20px;
+        text-align: left;
+        margin-left: 10px;
+        .book-title {
+            color: #E0482A;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .author-name {
+            color: #105AA2;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+        .book-category {
+            color: #309EC4;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+        .published-date {
+            color: #8A98A0;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 5px 0;
+        }
+        .book-info{ 
+            color: #000;
+            font-size: 12px;
+            //font-weight: bold;
+            padding: 5px 0;
+         }
+        .number-of-reviews {
+            color: #8A98A0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .book-price {
+            color: #000;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 5px 6px 25px -2px #EEE;
+            width: 230px;
+            margin-top: 20px;
+        }
+        
+        .cart-container {
+            margin-top: 30px;
+        }
+        .form-group {
+            width: 350px;
+        }
+        .container-left {
+            width: 33%;
+            float: left;
+            
+        }
+
+        .container-right {
+            width: 67%;
+            float: left; 
+        }
+        
+    }
+}
+
+.search-buttons-container {
+    padding-left: 40px;
+    .form-group {
+        width: 18%;
+        float: left;
+        display: inline-block;
+    }
+
+    .advanced-search {
+        float: left;
+        display: inline-block;
+    }
+    .search {
+        float: left;
+        display: inline-block;
+    }
+}
+

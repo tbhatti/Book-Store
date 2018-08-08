@@ -11,7 +11,10 @@ export default class PageLayout extends React.Component {
 			redirectToBookCategories: false,
 			redirectToHome: false,
 			redirectToBooks: false,
-			redirectToAuthors: false
+			redirectToAuthors: false,
+			redirectToCart: false,
+			redirectToPublishers: false,
+			itemsList: []
 		}			
 	  }
 	  
@@ -23,12 +26,30 @@ export default class PageLayout extends React.Component {
             dataType: "json",
             success: (userProfile) => {
 			   this.setState({userProfile: userProfile[0]});
+			   this.getShoppingCartDetails()
             },
             error: ()=> {
                 console.log('User with the given username does not exit')
 
               } 
-		});		
+		});
+		
+	}
+
+	getShoppingCartDetails = () => {
+		console.log(' this.state.userProfile', this.state.userProfile)
+		$.ajax({  
+            type: "POST",  
+            url: "http://localhost:5000/get-cart-details",  
+            data: JSON.stringify({"customer_id": this.state.userProfile.id}),  
+            contentType: "application/json; charset=utf-8",    
+            dataType: "json",
+            success: (data) => {              
+               
+                this.setState({itemsList: data});      
+            },
+            error: ()=> { console.log('There is no item in your shoping cart') } 
+        });
 	}
 	
 	onClickBookCategories = () => {
@@ -67,6 +88,19 @@ export default class PageLayout extends React.Component {
 		'menu authors-list', this.props.selectedTab === 'authors' ? this.props.selectedTab : '')
 	}
 
+	onClickPublishers = () => {
+		this.setState({redirectToPublishers: true})
+	}
+
+	setPublishersTabClass =  () => {
+		return ClassNames(
+		'menu publishers-list', this.props.selectedTab === 'publishers' ? this.props.selectedTab : '')
+	}
+
+	onClickCart = () => {
+		this.setState({redirectToCart: true})
+	}
+
 	render () {
 		return (
 			<div className='container-home-page'> 
@@ -76,12 +110,13 @@ export default class PageLayout extends React.Component {
 							<div className='container-user-profile'>
 								{this.state.userProfile ? <div className='conatiner-welcome'><h4>Welcome:</h4> <h4>{this.state.userProfile.name}</h4>
 								<span className="logout-span"><a href="/">Logout</a></span></div> : null }
-								
+								<div className="shopping-cart" onClick={this.onClickCart}>
+									<span className="glyphicon glyphicon-shopping-cart"></span> My Shopping Cart
+									<div className="circleBase type3">{this.state.itemsList.length}</div>
+                            	</div>   
 							</div>
 						</div>
-						<div className="col order-12">
 						
-						</div>
 						<div className="col order-1">
 						<img className='logo' src='http://localhost:8080/Online-Book-Clubs.png' alt='Talent Manager'  />
 						</div>
@@ -96,6 +131,7 @@ export default class PageLayout extends React.Component {
 						<div className={this.setBookCategoriesTabClass()} onClick={this.onClickBookCategories}>Book Categories</div>
 						<div className={this.setBooksTabClass()} onClick={this.onClickBooks} >Books</div>
 						<div className={this.setAuthorsTabClass()} onClick={this.onClickAuthors} >Authors</div>
+						<div className={this.setPublishersTabClass()} onClick={this.onClickPublishers} >Publishers</div>
 					</div>	
 					<div className="container-page">{this.props.children}</div>			
 					
@@ -103,7 +139,9 @@ export default class PageLayout extends React.Component {
 				{this.state.redirectToBookCategories && <Redirect to='/book-categories' />}		
 				{this.state.redirectToHome && <Redirect to='/home' />}	
 				{this.state.redirectToBooks && <Redirect to='/books' />}   
-				{this.state.redirectToAuthors && <Redirect to='/authors' />}	
+				{this.state.redirectToAuthors && <Redirect to='/authors' />} 
+				{this.state.redirectToPublishers && <Redirect to='/publishers' />}	
+				{this.state.redirectToCart && <Redirect to='/cart' />}  
 	</div>
 		)
 	}

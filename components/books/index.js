@@ -2,6 +2,7 @@ import React from 'react';
 import  { Redirect } from 'react-router-dom'
 import _ from 'lodash'
 import Layout from '../../containers/page-layout'
+import Suggestions from './suggestion'
 
 
 export default class Books extends React.Component {
@@ -13,14 +14,19 @@ export default class Books extends React.Component {
             authorsList: [],
 			bookCategories: [],
 			selectedBookCategory: '',
-			selectedAuthor: ''
+            selectedAuthor: '',
+            query: '',
+            results: [],
+            language: '',
+            showSuggestions: false,
+            spreadSheet:[],
+            detailsRedirect: false,
+            bookID: ''
 		}
-      this.datas = {}
 		
     }
     
     componentDidMount = () => {
-        console.log('componentDidMount get called', this.state.userDetail,  'Data',  this.datas)
         $.ajax({  
 			type: "GET",  
 			url: "http://localhost:5000/books-list",  
@@ -38,7 +44,6 @@ export default class Books extends React.Component {
 			contentType: "application/json; charset=utf-8",    
 			dataType: "json",
 			success: (data) => { 
-                console.log('CAT====>', data[0].name)
 				this.setState({bookCategories: data, selectedBookCategory: data[0].name });
 			},
 			error: ()=> { } 
@@ -50,12 +55,11 @@ export default class Books extends React.Component {
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: (data) => { 
-                console.log('AUTHHHH====>', data[0].name)
 				this.setState({authorsList: data, selectedAuthor: data[0].name});
 			},
 			error: ()=> { } 
 		});
-		
+       
     }
 
     onChangeBooksCategory = (event) => {
@@ -70,7 +74,7 @@ export default class Books extends React.Component {
 			success: (data) => { 
 				this.setState({authorsList: data});
 			},
-			error: ()=> { } 
+			error: ()=> { console.log('Authors with the given Genre does not exit') } 
         });
 	
 	}
@@ -80,14 +84,16 @@ export default class Books extends React.Component {
 	}
 
     rowClickEvent = (row) => {
-		
+        console.log('Details', row)
+        this.setState({detailsRedirect: true, bookID: row.id})
 	}
 
 	renderRows = () => {
-		return this.state.booksList.map((row) => {
+        return this.state.booksList.length > 0 ? 
+        this.state.booksList.map((row) => {
           
             let imageSource = 'http://localhost:8080/'+row.cover_image
-			return <tr onClick={() => this.rowClickEvent(row)}>
+			return <tr onClick={() => this.rowClickEvent(row)} key={row.id}>
 				<td>{row.id}</td>
 				<td>{row.title}</td>
                 <td>{row.author_name}</td>
@@ -96,7 +102,7 @@ export default class Books extends React.Component {
                 <td><img className="small-image" src={imageSource} /></td>
 			
 			</tr>
-		})
+		}) : null 
 
     }
     
@@ -106,7 +112,6 @@ export default class Books extends React.Component {
 
 
     filterBooks = () => {
-        console.log('selectedBookCategory=>', this.state.selectedBookCategory, 'selectedAuthor', this.state.selectedAuthor)
         $.ajax({  
 			type: "POST",  
 			url: "http://localhost:5000/filter-books",  
@@ -114,44 +119,134 @@ export default class Books extends React.Component {
 			contentType: "application/json; charset=utf-8",    
 			dataType: "json",
 			success: (data) => { 
-				this.setState({booksList: data});
+                data.length > 0 ? this.setState({error: ''}) : this.setState({error: 'Authors with the given Book Category does not exit'})
+                this.setState({booksList: data});
+                //console.log('Authors with the given Genre does not exit', filter-books)
+			},
+			error: ()=> {  console.log('whatttttttttt')} 
+        });
+    }
+
+    autoSuggestBooks = () => {
+        $.ajax({  
+			type: "POST",  
+            url: "http://localhost:5000/search-books", 
+            data: JSON.stringify({"prefix": this.state.query}), 
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: (data) => { 
+				this.setState({
+                    results: data
+                  })
 			},
 			error: ()=> { } 
         });
-	}
+
+    }
+    
+    handleInputChange = () => {
+        this.setState({
+          query: this.search.value,
+          showSuggestions: true
+        }, () => {
+          if (this.search.value && this.search.value.length > 1) {
+            if (this.search.value.length % 2 === 0) {
+              this.autoSuggestBooks()
+            }
+          } else if (!this.search.value) {
+          }
+        })
+      }
+    
+      handleBooksTitleChange = (langValue) => {
+        this.setState({language: langValue, showSuggestions: false});
+        this.search.value = langValue
+    }
+
+    simplSearch = () => {
+        let keyword = this.state.language
+        $.ajax({  
+			type: "POST",  
+            url: "http://localhost:5000/search", 
+            data: JSON.stringify({"keyword": keyword}), 
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: (data) => { 
+                console.log(data)
+				this.setState({booksList: data})
+			},
+			error: ()=> { } 
+        });
+    }
 
 	render () {
+      
 		return (
-            <Layout selectedTab="books">
-                <div className="container-book-categories">
-                <div className='page-header'>
+
+            <Layout selectedTab="books" ref='layOut'>
+                <div className="page-container-layout">
+                <div className="page-header">
 					
 					<h1>Books</h1>
 				</div>
+               
+                <div className="container">
+                    <div className="row">
+                        <div id="filter-panel" className="collapse filter-panel">
+                            <div className="panel panel-default">
+                                <div className="panel-body">
+                                    <div className="form-inline" role="form">
+                                        <div className="form-group">
+                                            <label className="filter-col" style={{margin: '0 0 0 0'}} >Book Category:</label>
+                                            <select name="book-category" className="form-control" onChange = {this.onChangeBooksCategory}>
+                                                <option hidden>Please Select</option> 
+                                                    {this.state.bookCategories.map(cat =>                                                 
+                                                        <option key={cat.id} value={cat.name}>{cat.name}</option>
+                                                    )};
+                                            </select>                              
+                                        </div> 
+                                        <div className="form-group">
+                                            <label className="filter-col" style={{margin: '0 0 0 0'}}>Author:</label>
+                                            <select name="author-name" className="form-control" onChange = {this.onChangeAuthor}>
+                                                <option  hidden>Please Select</option> 
+                                                {this.state.authorsList.length ? this.state.authorsList.map((author, index) =>
+                                                    <option key={author.id} value={author.name}>{author.name}</option>                                                  
+                                                ) : null};
+                                            </select>
+                                        </div>
+                                        <div className="form-group search-button">                            
+                                            <button type="submit" className="btn btn-primary filter-col" onClick={this.filterBooks}>
+                                                Filter Books
+                                            </button>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                             
+                    </div>
+                </div>
+                <div className="search-buttons-container">
+                    <div className="form-group">                      
+                        <input className="form-control" placeholder="Search for books by Title / Author / Category" ref={input => this.search = input} onChange={this.handleInputChange}/>
+                            {this.state.showSuggestions && <Suggestions results={this.state.results} onBookSelect={this.handleBooksTitleChange}/>}
+                    </div>
+
+                    <button type="button" className="btn btn-primary btn-info search" onClick={this.simplSearch}>
+                       Search
+                    </button>
+
+                    <button type="button" className="btn btn-primary advanced-search" data-toggle="collapse" data-target="#filter-panel" >
+                        <span className="glyphicon glyphicon-cog"></span> Advanced Search
+                    </button>
+                </div>
+                         
+                                                        
+                    
 
                     <div className="container-table">
                     
                         <div className="row">
-                                <div className="row">
-								<div className="form-group">
-                                    <label>Select Category</label>
-                                    <select name="book-category" className="form-control" onChange = {this.onChangeBooksCategory}>
-                                        {this.state.bookCategories.map(cat =>
-                                        <option key={cat.id} value={cat.name}>{cat.name}</option>
-                                        )};
-                                    </select>
-                                </div>
-                                <div className="form-group">
-                                    <label>Select Name</label>
-                                    <select name="author-name" className="form-control" onChange = {this.onChangeAuthor}>
-                                        {this.state.authorsList.map(author =>
-                                        <option key={author.id} value={author.name}>{author.name}</option>
-                                        )};
-                                    </select>
-                                </div> 
-                                <button className="btn btn-primary" onClick={this.filterBooks}>Filter</button>
-                        </div>
-                          
+                        
                             <table className="table table-hover">
                                 <thead>
                                     <tr>
@@ -160,6 +255,7 @@ export default class Books extends React.Component {
                                     <th scope="col">Author Name</th>
                                     <th scope="col">Book Category</th>
                                     <th scope="col">Published Date</th>
+                                    <th scope="col">Book Image</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -170,6 +266,7 @@ export default class Books extends React.Component {
                     </div>
                 </div>
                 {this.state.redirect && <Redirect to="/new-book" />}
+                {this.state.detailsRedirect && <Redirect to={`/book-detail/${this.state.bookID}`} />}
 
                 <div className='buttons-container'>
 						<div className='pull-right'>

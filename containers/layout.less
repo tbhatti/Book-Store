@@ -1,12 +1,14 @@
 @import "../components/home/home.less";
+
 .container-home-page {
     //margin: 0 200px 100px 200px;
     //box-shadow: 0 8px 6px -2px #ccc;
     
     .container {
-        max-width: 100% !important;
+        min-width: 100% !important;
         box-shadow: 0 0px 40px -2px #135B9E;
         padding: 0 50px;
+        background: #0C2963;
     
         .order-12 {
             padding: 20px;
@@ -30,6 +32,7 @@
     .container-user-profile {
             width: 100%;
             height: 100%;
+            color: #FFF;
             position: relative;
         .conatiner-welcome {
             right: 30px;
@@ -100,6 +103,7 @@
             .container {
                 z-index: 0;
                 float: right;
+                
             }
         }
         .container-menu {
@@ -135,6 +139,11 @@
                 margin-left: 101px;
                 width: 100px;  
             }
+
+            .publishers-list {
+                margin-left: 86px;
+                width: 115px; 
+            }
             // Selected Book Categories Class
             .book-categories {
                 background: #E0482A;
@@ -162,6 +171,13 @@
                 box-shadow: 12px 5px 10px -1px #555; 
             }
 
+            .publishers {
+                background: #E0482A;
+                width: 125px;
+                position: sticky;
+                box-shadow: 12px 5px 10px -1px #555; 
+            }
+
         }
         .container-page {
             display: inline-block;
@@ -169,6 +185,37 @@
             border: 1px solid #CCC;
             border-bottom: none;
             height: 100%;
+            overflow-y: auto;
         }
     }
+}
+.shopping-cart {
+    margin: 10px;
+    float: right;
+    padding: 10px 20px 10px 10px;
+    cursor: pointer;
+    position: absolute;
+    right: 249px;
+    .circleBase {
+        border-radius: 50%;
+        //behavior: url(PIE.htc); /* remove if you don't care about IE8 */
+    }
+    
+    .type3 {
+        width: 30px;
+    height: 30px;
+    background: #E0482A;
+    display: inline-block;
+    float: right;
+    text-align: -webkit-center;
+    padding: 4px;
+    font-weight: bold;
+    position: absolute;
+    top: 2px;
+    margin: 5px;
+    }
+    
+}
+.shopping-cart:hover{
+    text-decoration: underline;
 }

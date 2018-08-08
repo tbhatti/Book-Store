@@ -41,6 +41,9 @@ export default class BookCategories extends React.Component {
 				<td>{row.id}</td>
 				<td>{row.name}</td>
 				<td>{row.description}</td>
+                <td>{row.id}</td>
+				<td>{row.name}</td>
+				<td>{row.description}</td>
 			
 			</tr>
 		})
@@ -55,7 +58,7 @@ export default class BookCategories extends React.Component {
 	render () {
 		return (
             <Layout selectedTab="book-categories">
-                <div className="container-book-categories">
+                <div className="page-container-layout">
                 <div className='page-header'>
 					
 					<h1>Book Categories</h1>
@@ -66,6 +69,9 @@ export default class BookCategories extends React.Component {
                             <table className="table table-hover">
                                 <thead>
                                     <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Description</th>
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Description</th>

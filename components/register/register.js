@@ -10,20 +10,6 @@ export default class Home extends React.Component {
       }
 
 	componentDidMount = () => {
-        $.ajax({  
-            type: "POST",  
-            url: "http://localhost:5000/userProfile", 
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: (userProfile) => {
-			   this.setState({userProfile: userProfile[0]});
-			   console.log('EMAIL=========>',userProfile[0].email)
-            },
-            error: ()=> {
-                console.log('User with the given username does not exit')
-
-              } 
-        });
     }
 
 	render () {

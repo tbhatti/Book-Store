@@ -9,29 +9,39 @@ export default class NewCategory extends React.Component {
 		super(props)
 		this.state = {
             redirect: false,
-            categoryName: '',
-            categoryDescription: ''
+            authorName: '',
+            selectedBookCategory: '',
+            bookCategories: []
 		}
 		
     }
     
     componentDidMount = () => {	
+        $.ajax({  
+			type: "GET",  
+			url: "http://localhost:5000/books-categories-list",  
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: (data) => { 
+				this.setState({bookCategories: data});
+			},
+			error: ()=> { } 
+        });
     }
 
-    onCategoryNameInputChange = (event) => {
-        this.setState({categoryName: event.target.value})
+    onAuthorNameInputChange = (event) => {
+        this.setState({authorName: event.target.value})
     }
 
-    onCategoryDescriptionChange = (event) => {
-        this.setState({categoryDescription: event.target.value})
+    onChangeBooksCategory = (event) => {
+        this.setState({selectedBookCategory: event.target.value})
     }
-    
 
-    createCatgory = () => {
+    createAuthor = () => {
         $.ajax({  
             type: "POST",  
-            url: "http://localhost:5000/new-category",  
-            data: JSON.stringify({"name": this.state.categoryName, "description": this.state.categoryDescription}),  
+            url: "http://localhost:5000/new-author",  
+            data: JSON.stringify({"name": this.state.authorName, "genre": this.state.selectedBookCategory}),  
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: (dataString) => {  
@@ -52,35 +62,38 @@ export default class NewCategory extends React.Component {
 
 	render () {
 		return (
-            <Layout selectedTab="book-categories">
+            <Layout selectedTab="authors">
                 
                 <div className='row page-header'>
 					
-					<h1>Book Categories</h1>
+					<h1>Authors</h1>
 				</div>
 
 
                
-                    <div className="container-new-category">
+               <div className="container-new-category">
                         <div className="row">
                         <fieldset >
                                 <div className="form-group">
-                                <label>Category Name</label>
-                                <input type="text" id="categoryNameInput" className="form-control"  placeholder="Category Name" onChange={this.onCategoryNameInputChange}/>
+                                <label>Author Name</label>
+                                <input type="text" id="authorNameInput" className="form-control"  placeholder="Author Name" onChange={this.onAuthorNameInputChange}/>
                                 </div>
                                 <div className="form-group">
-                                    <label >Description</label>
-                                    <textarea className="form-control" rows="10" cols="50" placeholder="Category Description" onChange={this.onCategoryDescriptionChange} ></textarea>
-                                    
+                                    <label>Book Category</label>
+                                    <select name="book-category" className="form-control" onChange = {this.onChangeBooksCategory}>
+                                        {this.state.bookCategories.map(cat =>
+                                        <option id={cat.id} value={cat.name}>{cat.name}</option>
+                                        )};
+                                    </select>
                                 </div>
-                                <button className="btn btn-primary" onClick={this.createCatgory}>Create Category</button>
+                                <button className="btn btn-primary" onClick={this.createAuthor}>Create Author</button>
                                 <button className="btn btn-secondary" onClick={this.onClickCancel}>Cancel</button>
                                 
                             </fieldset>
                             
                     </div>
                 </div>
-                {this.state.redirect && <Redirect to="/book-categories" />}
+                {this.state.redirect && <Redirect to="/authors" />}
                
             </Layout>
 

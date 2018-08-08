@@ -1,6 +1,8 @@
 
 import React, { Component } from 'react';
 import  { Redirect } from 'react-router-dom'
+import {setProfile} from '../../actions/user';
+import {connect} from 'react-redux';
 
 class Login extends Component {
 
@@ -27,8 +29,10 @@ class Login extends Component {
             data: JSON.stringify({"email": this.state.username, "password": this.state.password}),  
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            success: (dataString) => {  
+            success: (userArray) => {  
                 //$('#mentor_list').html(dataString);
+                console.log('LOGIN===========>', userArray[0])
+                this.props.dispatch(setProfile(userArray[0]))
                 this.setState({errorMessage: '', showError: false, redirect: true});
                // <Redirect to='www.google.com'  />
             },
@@ -87,6 +91,7 @@ class Login extends Component {
 
 
   render() {
+    const {user} = this.props.userReducer;
     return (
         <div className="container-main-page">       
            
@@ -171,4 +176,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(state => state)(Login);
