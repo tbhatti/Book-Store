@@ -139,20 +139,20 @@ class Login extends Component {
                 <form>
                     <fieldset>
                         <div className="form-group">
-                        <label for="fistNameTextInput">First Name</label>
+                        <label>First Name</label>
                         <input type="text" id="fistNameTextInput" className="form-control" placeholder="First Name" onChange={this.onFirstNameChange}/>
                         </div>
                         <div className="form-group">
-                            <label for="lastNameTextInput">Last Name</label>
+                            <label >Last Name</label>
                             <input type="text" id="lastNameTextInput" className="form-control" placeholder="Last Name" onChange={this.onLastNameChange}/>
                         </div>
                         <div className="form-group">
-                            <label for="emailTextInput">Email</label>
+                            <label>Email</label>
                             <input type="text" id="emailTextInput" className="form-control" placeholder="Email" onChange={this.onEmailChange}/>
                         </div>
                        
                         <div className="form-group">
-                            <label for="passwordTextInput">Password (6 or more characters)</label>
+                            <label>Password (7 or more characters)</label>
                             <input type="password" id="passwordTextInput" className="form-control" placeholder="Password" onChange={this.onPasswordChange} />
                         </div>
 

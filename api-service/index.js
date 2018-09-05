@@ -2,6 +2,9 @@ import assign from 'object-assign'
 import {EventEmitter} from 'events'
 
 const BooksService = assign({}, EventEmitter.prototype, {
+    categoriesList: [],
+    booksList: [],
+    addedToCart: false,
 	loginRequest (data) {
         let result 
 		$.ajax({  
@@ -20,6 +23,113 @@ const BooksService = assign({}, EventEmitter.prototype, {
               } 
         });
         return {errorMessage: '', result}
+    },
+    getCategoriesListRequest () {
+		$.ajax({  
+			type: "GET",  
+			url: "http://localhost:5000/books-categories-list",  
+			contentType: "application/json; charset=utf-8",    
+            dataType: "json",
+            async: false,
+			success: (data) => { 
+                this.categoriesList = data
+               
+			},
+			error: ()=> { } 
+        });
+        return this.categoriesList
+    },
+    getBooksListRequest () {
+		$.ajax({  
+			type: "GET",  
+			url: "http://localhost:5000/books-list",  
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+			success: (data) => { 
+                this.booksList = data
+			},
+			error: ()=> { } 
+		});
+        return this.booksList
+    },
+    getAuthorsListRequest () {
+		$.ajax({  
+			type: "GET",  
+			url: "http://localhost:5000/authors-list",  
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+			success: (data) => { 
+                this.booksList = data
+			},
+			error: ()=> { } 
+		});
+        return this.booksList
+    },
+    
+    addToCartRequest (data) {
+		$.ajax({  
+			type: "POST",  
+			url: "http://localhost:5000/add-to-cart",  
+		    data: JSON.stringify(data),  
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+			success: (data) => {
+                this.addedToCart = true
+			},
+			error: ()=> {
+				console.log('User does not exist')
+
+			  } 
+        });
+        return this.addedToCart
+    },
+    keywordSearchRequest (keyword) {
+		$.ajax({  
+			type: "POST",  
+            url: "http://localhost:5000/search", 
+            data: JSON.stringify({"keyword": keyword}), 
+			contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+			success: (data) => { 
+				this.booksList = data
+			},
+			error: ()=> { } 
+        });
+        return this.booksList
+    },
+    filterBooksByCategory (categoryName) {
+		$.ajax({  
+            type: "POST",  
+            url: "http://localhost:5000/filters-books-by-categories", 
+            data: JSON.stringify({"category": categoryName}), 
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: (data) => { 
+                this.booksList = data
+            },
+            error: ()=> { } 
+        });
+        return this.booksList
+    },
+    filterBooksByAuthor (authorName) {
+		$.ajax({  
+            type: "POST",  
+            url: "http://localhost:5000/filters-books-by-authors", 
+            data: JSON.stringify({"aothor": authorName}), 
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: (data) => { 
+                this.booksList = data
+            },
+            error: ()=> { } 
+        });
+        return this.booksList
 	},
 	emitChange () {
 		this.emit('change')

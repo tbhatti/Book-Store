@@ -37,7 +37,7 @@ export default class BookCategories extends React.Component {
 
 	renderRows = () => {
 		return this.state.bookCategories.map((row) => {
-			return <tr onClick={() => this.rowClickEvent(row)}>
+			return <tr onClick={() => this.rowClickEvent(row)} key={row.id}>
 				<td>{row.id}</td>
 				<td>{row.name}</td>
 				<td>{row.description}</td>

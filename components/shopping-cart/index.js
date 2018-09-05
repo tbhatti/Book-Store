@@ -15,30 +15,36 @@ export default class ShoppingCart extends React.Component {
             userProfile: store.getState().userReducer.user,
             booksList: [],
             detailsRedirect: false,
-            bookID: ''
+            bookID: '',
+            showError: false
 		}
     }
     
     componentDidMount = () => {
-        console.log('store.getState().userReducer.user', localStorage,store.getState().userReducer.user)
+        
+        console.log('store.getState().userReducer.user',store.getState().userReducer.user)
         this.getCartDetails( this.state.userProfile.id)      
     }
 
-    getCartDetails = (id) => {
-        $.ajax({  
-            type: "POST",  
-            url: "http://localhost:5000/get-cart-details",  
-            data: JSON.stringify({"customer_id": id}),  
-            contentType: "application/json; charset=utf-8",    
-            dataType: "json",
-            success: (data) => {                   
-                let booksIDs = []
-                let abc = data.map((item) => {  booksIDs.push(item.book_id)})
-                this.setState({itemsList: data, bookIds: booksIDs}); 
-                this.getBooksList(booksIDs)             
-            },
-            error: ()=> { console.log('There is no item in your shoping cart') } 
-        });
+    getCartDetails = (id) => { 
+        if(id) {
+            $.ajax({  
+                type: "POST",  
+                url: "http://localhost:5000/get-cart-details",  
+                data: JSON.stringify({"customer_id": id}),  
+                contentType: "application/json; charset=utf-8",    
+                dataType: "json",
+                success: (data) => {                   
+                    let booksIDs = []
+                    let abc = data.map((item) => {  booksIDs.push(item.book_id)})
+                    this.setState({itemsList: data, bookIds: booksIDs}); 
+                    this.getBooksList(booksIDs)             
+                },
+                error: ()=> { console.log('There is no item in your shoping cart') } 
+            });
+        } else {
+            this.setState({showError: true})
+       }
     }
 
     getBooksList = (ids) => { 
@@ -99,15 +105,19 @@ export default class ShoppingCart extends React.Component {
             let imageSource = 'http://localhost:8080/'+coverImage
 			return <tr key={row.id}>
 				<td>{row.id}</td>
-                <td className="book-cell"><div className="container-book" onClick={() => this.rowClickEvent(row)}><img className="small-image" src={imageSource} />
-                <div className="title">{book.title}</div>
-                <div className="category">{book.book_category}</div>
-                <div className="author">{book.author_name}</div>
-                <div className="">
-                    <StarRatings rating={book.rating} starRatedColor="orange"  numberOfStars={5} name='rating' starDimension="14px" starSpacing="1px"/>
-                </div>
-                <div className="price">$ {book.price}</div>
-                </div></td>
+                <td className="book-cell">
+                    <div className="container-book" onClick={() => this.rowClickEvent(row)}><span className="image-span"><img className="small-image" src={imageSource} /></span>
+                        <span className="info-span">
+                            <div className="title">{book.title}</div>
+                            <div className="category">{book.book_category}</div>
+                            <div className="author">{book.author_name}</div>
+                            <div className="">
+                                <StarRatings rating={book.rating} starRatedColor="orange"  numberOfStars={5} name='rating' starDimension="14px" starSpacing="1px"/>
+                            </div>
+                            <div className="price">$ {book.price}</div>
+                        </span>
+                    </div>
+                </td>
 				<td>{row.price}</td>
                 <td>{row.quantity}</td>
                 <td>{row.quantity*row.price}</td>
@@ -146,7 +156,12 @@ export default class ShoppingCart extends React.Component {
                     </div>             
                 </div>
                 {this.state.detailsRedirect && <Redirect to={`/book-detail/${this.state.bookID}`} />}
-            </Layout> : null
+            </Layout> :  this.state.showError ? <div className="alert alert-danger alert-block">
+                    <button className="close" data-dismiss="alert">&times;</button>
+                        <span>Your Session Expired! Please <a href="/" class="alert-link">Login Again</a></span>
+                </div>
+                : null
+                
 
         )
 	}
@@ -155,4 +170,3 @@ export default class ShoppingCart extends React.Component {
 ShoppingCart.propTypes = {
     //bookID: React.PropTypes.string
 }
-

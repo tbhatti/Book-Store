@@ -33,7 +33,7 @@ export default class Books extends React.Component {
 
 	renderRows = () => {
 		return this.state.publishersList.map((row) => {
-			return <tr onClick={() => this.rowClickEvent(row)}>
+			return <tr onClick={() => this.rowClickEvent(row)} key={row.id}>
 				<td>{row.id}</td>
 				<td>{row.name}</td>
 				<td>{row.publication_city}</td>

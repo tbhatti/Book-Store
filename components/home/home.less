@@ -78,34 +78,381 @@
     }
 }
 
-.book-mark-image {
-    width:100%;
-    background:url(http://localhost:8080/Online-Book-Clubs.png);
-    background-repeat:no-repeat;
-    background-position:center;
-    position: absolute;
-    top: 240px;
-    .transparent-box {
-        width:100%;
-        height:300px;
-        margin:30px 50px;
-        background-color:#ffffff;
-        opacity:0.9;
-        filter:alpha(opacity=60);
-        p {
-            text-align: center;
-            height: 100%;
-            line-height: 300px;
-            font-size: 28px;
-        }
-
-        }
-}
-
 .home-page {
+    height: 100%;
+    .container-top-header {
+        height: 80px;
+        width: 100%;
+        box-shadow: 0 5px 40px -2px #000;
+        padding-left: 115px;
+        background: #3c5382;
+        .glyphicon-book {
+            font-size: 82px;
+            color: #0C2963;
+        }
+        .logo-container {
+            width: 250px;
+            display: inline-block;
+            vertical-align: top;
+            padding-top: 12px;
+            .logo {
+                height: 60px;
+                float: left;
+                display: inline-block;
+            }
+            .store-name {
+                font-size: 36px;
+                font-weight: bold;
+                font-family: 'Century Gothic';
+                color: #FFF;
+            }
+        }
+       
+        .buttons-container {
+            width: 80%;
+            padding-left: 100px;
+            display: inline-block;
+            padding-top: 20px;
+            .form-group {
+                width: 50%;
+                float: left;
+                display: inline-block;
+                .form-control {
+                    border-radius: 0;
+                    height: 38px;
+                    font-family: 'Century Gothic';
+                }
+                
+            }
+            .advanced-search {
+                background: #3c5382 !important;
+               
+                float: left;
+                border: 1px solid #FFF;
+                border-radius: 0;
+                color: #FFF;
+            }
+            .search {
+                float: left;
+                margin: 0 0 0 10px;
+            }
+
+        }
+       
+        .image-school-name {
+            width: 60px;
+        }
+        .container-logo {
+            width: 291px;
+            position: absolute;
+            top: 105px;
+            float: left;
+            box-shadow: 4px 2px 25px 10px #CCC;
+            .image-logo {
+                height: 232px;
+            }
+
+            .school-name {
+                font-size: 20px;
+                font-weight: bold;
+                padding: 0px 10px;
+                font-family: cursive;
+                color: #F8DD97;
+                background: #1E154E;
+            }
+        }
+        .container-main {
+            display: inline-block;
+            float: left;
+            padding-left: 58px;
+            top: 30px;
+            position: absolute;
+            .menu-item {
+                display: inline-block;
+                padding: 10px 20px;
+                font-size: 16px;
+                font-weight: bold;
+                color: #1E154E;
+                font-family: Century Gothic;
+               
+            }
+        }
+    }
+
+    .container {
+        @media (min-width: 992px) {
+            .col-md-2 {
+                width: 16.66666667%;
+                text-align: center;
+            }
+        }       
+    }
+
+    @media (min-width: 1200px) {
+        .container {
+            width: 100%;
+        }
+    }
+    
+    .container-drop-down-menu {
+        height: 45px;
+        background: #FFFFFF;
+        padding-left: 130px;
+        padding-top: 15px;
+        box-shadow: 0 1px 10px 0px #CCC;
+        margin-bottom: 10px;
+        .drop-dwon {
+            height: 100%;
+            font-size: 13px;
+            font-family: 'Century Gothic';
+            display: inline-block;
+            width: 155px;
+            padding-left: 5px;
+            cursor: pointer;
+            .glyphicon-chevron-down {
+                display: inline-block;
+                padding-left: 10px;
+            }
+            .glyphicon-chevron-up {
+                display: none;
+                padding-left: 10px;
+            }
+            .container-categories {
+                font-size: 13px;
+                width: 700px;
+                height: 250px;
+                position: absolute;
+                background: #FFFFFF;
+                left: 130px;
+                z-index: 999;
+               display: none;
+                top: 161px;
+                border: 1px solid #CCC;
+                .list-categories {
+                    list-style: none;
+                    display: contents;
+                    //font-family: 'Century Gothic';
+                    li {
+                        padding: 4px 0 4px 5px;
+                        font-family: 'Century Gothic';
+                        
+                        &:hover {
+                            background: #EEE;
+                        }
+                    }
+                }
+                .column-left {
+                    padding-left: 10px;
+                    width: 33%;
+                    display: inline-block;
+                    float: left;
+                    .top-categories {
+                        padding: 10px 0 0px 10px;
+                        font-size: 13px;
+                        border-bottom: 1px solid;
+                        width: 120px;
+                        font-weight: bold;
+                        font-family: 'Century Gothic';
+                        margin-bottom: 10px;
+                    }
+                }
+                .column-middle {
+                    width: 33%;
+                    display: inline-block;
+                    float: left;
+                    .top-authors {
+                        padding: 10px 0 0px 10px;
+                        font-size: 13px;
+                        border-bottom: 1px solid;
+                        width: 120px;
+                        font-weight: bold;
+                        font-family: 'Century Gothic';
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .column-right {
+                    width: 33%;
+                    display: inline-block;
+                    float: left;
+                    .top-authors {
+                        padding: 10px 0 0px 10px;
+                        font-size: 16px;
+                        border-bottom: 1px solid;
+                        width: 150px;
+                        font-weight: bold;
+                    }
+                }
+            }
+            &:hover {
+                border-bottom: 2px solid #3D414A;
+                .container-categories {
+                    display: block;
+                    border-top: 5px solid #2F9AC1;
+                }
+                .glyphicon-chevron-down {
+                    display: none;
+                }
+                .glyphicon-chevron-up {
+                    display: inline-block;
+                }
+            }
+        }
+
+        .top-sellers {
+            display: inline-block;
+            margin-left: 80px;
+            font-family: 'Century Gothic';
+            height: 100%;
+            cursor: pointer;
+            &:hover {
+                border-bottom: 2px solid #3D414A;
+            }
+        }
+
+        .coming-soon {
+            display: inline-block;
+            margin-left: 40px;
+            font-family: 'Century Gothic';
+            height: 100%;
+            cursor: pointer;
+            &:hover {
+                border-bottom: 2px solid #3D414A;
+            }
+        }
+
+        .bargain {
+            display: inline-block;
+            margin-left: 40px;
+            font-family: 'Century Gothic';
+            height: 100%;
+            cursor: pointer;
+            &:hover {
+                border-bottom: 2px solid #3D414A;
+            }
+        }
+
+        .highlights {
+            display: inline-block;
+            margin-left: 40px;
+            font-family: 'Century Gothic';
+            height: 100%;
+            cursor: pointer;
+            &:hover {
+                border-bottom: 2px solid #3D414A;
+            }
+        }
+        
+    }
+
+   
+
+    .left-content { 
+        width: 20%;
+        height: 100%;
+        //background: lightgreen;
+        display: inline-block;
+        .left-menu {
+            height: 100%;
+            width: 250px;
+            float: right;
+            padding: 0 10px;
+            box-shadow: 0 1px 10px 0px #CCC;
+            margin-right: 15px;
+            .form-control {
+               
+                margin: 0 !important;
+                border-radius: 0 !important;
+                font-family: century gothic;
+            }
+            h3 {
+                font-family: century gothic;
+            }
+        }
+        .left-menu-contents {
+            background: lightblue;
+            width: 75%;
+            height: 100%;
+            float: right;
+        }
+        .form-control {
+            width: 230px !important;
+            margin: 0 !important;
+            border-radius: 0 !important;
+            font-family: century gothic;
+        }
+    }
+
+    .right-content { 
+        width: 75%;
+        height: 100%;
+        display: inline-block;
+        box-shadow: 0 1px 10px 0px #CCC;
+       
+        margin-right: 5%;
+        
+    }
+
+
+    .books-banner {
+        height: 150px;
+        margin: 0 42px 5px 40px;
+        position: relative;
+        padding-bottom: 50px;
+        box-shadow: 0 1px 10px 0px #AAA;
+        .banner-image {
+            height: 150px;
+            width: 70%;
+            float: left;
+            &:hover {
+                cursor: pointer;
+                opacity: 0.5;
+            }
+        }
+        .map-image {
+            height: 110px;
+            width: 29%;
+            float: right;
+            position: absolute;
+            bottom: 0px;
+            margin: 8px;
+        }
+        .banner-title {
+            position: absolute;
+            bottom: 0px;
+            height: 50px;
+            background: #333;
+            width: 100%;
+            opacity: 0.9;
+            display: none;
+            font-size: 32px;
+            font-family: century gothic;
+            text-align: center;
+            
+        }
+        &:hover {
+            .banner-title {
+                display: block;
+                cursor: pointer;
+               
+            }
+        }
+        .location-shop {
+            display: block;
+            color: #000;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px;
+            float: right;
+            width: 30%;
+            font-family: century gothic;
+        }
+    }
+
   .carousel {
     margin-bottom: 0;
     padding: 0 40px 30px 40px;
+    height: 594px;
     img {
         width: 90px;
         height: 90px;
@@ -181,3 +528,4 @@
 background: #333;
 }
 }
+ 
